@@ -1,0 +1,218 @@
+﻿@model Hackathon.Demo.Models.LoginModel
+<link href="~/content/css/bootstrap-jquery-ui.css" rel="stylesheet" />
+<link href="~/content/css/bootstrap-manulife.css" rel="stylesheet" />
+<link href="~/content/css/default.css" rel="stylesheet" />
+<link href="~/content/css/proposal-form.css" rel="stylesheet" />
+
+<div style="float: left; margin-left: 5px; margin-top: 2px;" data-ng-click="exitSys()">
+    <a href="javascript:void(0)">
+        <div class="button-exit"></div>
+    </a>
+</div>
+<div style="float: left; margin-top: 3px; padding-left: 50px; font-size: 18px;" class="ng-binding">25/07/2019</div>
+<div id="button-SaveAsFinal" ng-hide="DisableSaveIndicator" style="float: right" title="save" data-ng-click="btnSavePolicyAsFinal()" class="">
+    <a href="javascript:void(0)" data-toggle="modal">
+        <div class="button-save"></div>
+    </a>
+</div>
+<img id="button-SaveAsDraft" ng-hide="DisableSaveIndicator||nbForm.Steps.BeneficiaryOthers.Sections.PolicyDetails.NBConfirmInd == 'Y'" ng-click="btnSaveDraftPolicyEvent()" title="save as draft" style="float: right; cursor: pointer; height: 35px; margin-top: -4px;" src="../content/images/background/save_draf_icon.png" class="">
+<div style="float: right; margin-top: 3px; padding-right: 50px; font-size: 18px;" class="ng-binding"></div>
+<div style="clear: both"></div>
+
+<div class="step-tracker-container">
+    <ul id="title-step-tracker" class="step-tracker">
+        <!-- ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope active" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Personal</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Personal(Cont.)</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Plan</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Customer Due(FATCA/CRS)</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Declar &amp; Agent</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Beneficiary &amp; Others</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+        <li class="Liwidth ng-scope complete" data-ng-repeat="step in steps" data-ng-class="{'active': step.isActive, 'complete': isCompleted(step.dependencyRules)}" data-ng-click="navigateToStep(step)">
+            <div class="step-tracker-item-container">
+                <div class="step-tracker-item ">Admin</div>
+            </div>
+        </li>
+        <!-- end ngRepeat: step in steps -->
+    </ul>
+</div>
+
+<div class="body">
+    <div class="content" style="height: 1000px; width: 1150px;">
+        <div class="main-column" id="mainContext" style="width: 910px;">
+            <div class="main-panel">
+                <div class="panel-header">
+                    <div style="float: left" class="panel-title ng-binding">Personal&nbsp;</div>
+                    <div id="expend" onclick="expend();" style="width: 36px; height: 24px; cursor: pointer; display: block; background: url(&quot;../content/images/background/two_arrow_right_2.png&quot;); float: right; margin-top: 25px;"></div>
+                    <div id="sharik" onclick="sharik();" style="width: 36px; height: 24px; cursor: pointer; display: none; background: url(&quot;../content/images/background/two_arrow_left_2.png&quot;); float: right; margin-top: 25px;"></div>
+                    <div id="showPolicy" ng-click="showPolicy();" ng-show="!isShowPolicy&amp;&amp;isShowIcon&amp;&amp;isShowSearch" style="width: 70px; height: 30px; cursor: pointer; display: block; background-color: #DEEBC6; background: url('../content/images/background/link_arrow.png') no-repeat; float: right; margin-top: 30px;" class="ng-hide"></div>
+                    <div style="clear: both"></div>
+                </div>
+
+                <div class="wrapper-content">
+                    <span class="title-header" style="width: 100%">PERSONAL DETAILS</span>
+                </div>
+                <div class="content-border">
+                    <div class="row fasttrack_1 margin-b-5">
+                        <div id="div-full-name" class="sectionTitle">
+                            <b>1. Identification (ID) &amp; Full Name</b>
+                            <div class="bg" data-hideshowdiv="parent|nextAll"></div>
+                        </div>
+                        <div class="left-transition " style="position: relative; width: 100%!important;">
+                            <div class="col-md-12">
+                                <div class="itemDefault IDTypeLeft">
+                                    <div class="col-md-12">
+                                        <div class="col-md-1 margin-l-5 ng-hide" ng-show="showValidateInsuredDelete">
+                                            <span class="icon-delete" ng-click="clearSelectedClient('I')"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="radio-list">
+                                                <span class="radio">
+                                                    <input data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDType" ng-change="changeOtherIDType(1);" validate="InsuredIDNumRules" ng-disabled="InsuredSensitive.DisableIDType" value="S" id="Proposed_NRIC" name="proposednotype" type="radio" alwaysvalidate="" class="ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-i-d-num">
+                                                    <label for="Proposed_NRIC">NRIC</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="radio-list">
+                                                <span class="radio">
+                                                    <input data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDType" value="P" validate="InsuredIDNumRules" ng-change="changeOtherIDType(1);" ng-disabled="InsuredSensitive.DisableIDType" id="ProposedI_PASSPORT" name="proposednotype" type="radio" alwaysvalidate="" class="ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-i-d-num">
+                                                    <label for="ProposedI_PASSPORT">Passport</label>
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3" ng-class="{error: isInsuredIDTypeForMalaysiaShow}" style="width: 100px; position: relative">
+                                            <div class="radio-list">
+                                                <span class="radio">
+                                                    <input data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDType" value="M" validate="InsuredIDNumRules" ng-change="changeOtherIDType(1);" ng-disabled="InsuredSensitive.DisableIDType" id="Proposed_Malaysian" name="proposednotype" type="radio" alwaysvalidate="" class="ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-i-d-num">
+                                                    <label for="Proposed_Malaysian">Malaysia IC</label>
+                                                </span>
+                                            </div>
+                                            <div style="top: 0%; margin-left: 3px !important; transition-property: opacity, border-spacing; transition-duration: 0.15s, 0.15s;" class="tooltip-error popover fade right pos ng-animate hide-add ng-animate-start hide ng-animate-active hide-add-active" ng-class="{'in':isInsuredIDTypeForMalaysiaShow,'hide':!isInsuredIDTypeForMalaysiaShow}">
+                                                <div>
+                                                    <div class="arrow"></div>
+                                                    <div class="popover-content ng-binding">
+                                                    </div>
+                                                    <div href="javascript:void(0);" class="close" ng-click="closeInsuredIDTypeForMalaysiaError()">×</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="itemDefault IDTypeRight">
+                                    <div class="col-md-11">
+                                        <div class="col-md-3">
+                                            <div class="radio-list">
+                                                <span class="radio">
+                                                    <input data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDType" value="Z" validate="InsuredIDNumRules" ng-change="changeOtherIDType(1);" ng-disabled="InsuredSensitive.DisableIDType" id="Proposed_OTHER" name="proposednotype" type="radio" alwaysvalidate="" class="ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-i-d-num">
+                                                    <label for="Proposed_OTHER">Others</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 margin-t-5">
+                                <div class="col-md-2 margin-t-10" style="text-align: right; width: 100px;">
+                                    <span style="color: red;">*</span>
+                                </div>
+                                <div class="col-md-8" error-tooltip2="">
+                                    <div ng-class="{error: ErrorSummary.hasError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDNum')}" style="position: relative">
+                                        <input type="text" validate="InsuredIDNumRules" data-ng-blur="clientSearch('I')" ng-disabled="InsuredSensitive.DisableIDNum" ml-capitalize="" ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDNum" maxlength="20" class="border-box ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-i-d-num"><div class="tooltip-error popover fade right" ng-class="{in:ErrorSummary.hasError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDNum')}">
+                                            <div class="arrow"></div>
+                                            <div class="popover-content ng-binding"></div>
+                                            <div href="javascript:void(0);" class="close" ng-click="ErrorSummary.clearError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.IDNum')">×</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 margin-t-10 float-right">
+                                    <button class="collsponImageGrey iconRight" ng-show="!showPassport" ng-click="changeShowCitizenship(2)"></button>
+                                    <button class="folderImageGrey iconRight ng-hide" ng-show="showPassport" ng-click="changeShowCitizenship(2)"></button>
+                                </div>
+                            </div>
+                            <div class="col-md-12 margin-t-5 ng-hide" ng-show="showPassport">
+                                <div class="col-md-2 margin-t-10" style="width: 100px;">
+                                    <span style="padding-left: 10px;"><b>Passport No</b></span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="col-md-6">
+                                        <input type="text" style="width: 85%" ml-capitalize="" ng-disabled="InsuredSensitive.DisablePassportNum1" data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.PassportNum1" maxlength="100" class="ng-pristine ng-valid">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="border-box ng-pristine ng-valid" ml-capitalize="" ng-disabled="InsuredSensitive.DisablePassportNum2" data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.PassportNum2" maxlength="100">
+                                    </div>
+                                </div>
+                                <div class="item ng-hide" ng-show="showHideLine">
+                                    <label>&nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 margin-t-5">
+                                <div class="col-md-2 margin-t-10" style="width: 100px;">
+                                    <span style="padding-left: 10px;"><b>Title.</b></span>
+                                </div>
+                                <div class="col-md-2">
+                                    <select ng-options="m.Value for m in GetLookUpSalutation track by m.Key" data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.Title" combobox="" class="ng-pristine ng-valid" style="display: none;">
+                                        <option value="" selected="selected"></option>
+                                        <option value="Dr.">Dr. - Doctor</option>
+                                        <option value="Mdm">Mdm - Madam</option>
+                                        <option value="Mr.">Mr. - Mister</option>
+                                        <option value="Mrs.">Mrs. - Mistress</option>
+                                        <option value="Ms.">Ms. - Miss</option>
+                                    </select><span class="custom-combobox" style="display: inline; position: relative;"><input type="text" class="ui-autocomplete-input" autocomplete="off" data-original-title="" title=""><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><a tabindex="-1" data-original-title="" title="" class="dropdown-icon"></a></span>
+                                </div>
+                                <div class="col-md-3 margin-t-10" style="text-align: right;">
+                                    <span style="padding-left: 10px; padding-right: 10px;">
+                                        <span class="red">*</span><b>Full Name</b></span>
+                                </div>
+                                <div class="col-md-3" error-tooltip2="">
+                                    <div ng-class="{error: ErrorSummary.hasError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.ClientName')}" style="position: relative">
+                                        <input type="text" validate="InsuredFullNameRules" ml-capitalize="" maxlength="60" data-ng-model="nbForm.Steps.PersonalDetails.Sections.PersonInsured.ClientName" ng-disabled="InsuredSensitive.DisableClientName" class="border-box ng-pristine ng-valid ng-valid-nb-form.-steps.-personal-details.-sections.-person-insured.-client-name"><div class="tooltip-error popover fade right" ng-class="{in:ErrorSummary.hasError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.ClientName')}">
+                                            <div class="arrow"></div>
+                                            <div class="popover-content ng-binding"></div>
+                                            <div href="javascript:void(0);" class="close" ng-click="ErrorSummary.clearError('nbForm.Steps.PersonalDetails.Sections.PersonInsured.ClientName')">×</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item ng-hide" ng-show="showHideLine">
+                                <label>&nbsp;</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
